@@ -26,7 +26,9 @@ print("Total",total)
 print("No of users:",usr_count)
 print("Corrupt:",corrupt_count)
 print("Usable:",total-corrupt_count)
-
+print("No of characters:",len(letter_count.keys()))
+print("Min Char:",min(letter_count.keys()))
+print("Max char:",max(letter_count.keys()))
 #visualization purpose
 import numpy as np
 import matplotlib.pyplot as plt

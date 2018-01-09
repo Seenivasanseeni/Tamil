@@ -1,27 +1,26 @@
 import tensorflow as tf
 import numpy as np 
 import matplotlib.pyplot as plt
-import Pickle
+import pickle
 
-tf.graph(name="Graph for Tamil Character Recognition")
 
 #image parameters
 image_size=100
-num_characters=100
+num_characters=156
 
 #variables
-W=tf.Variable(tf.float32,shape=[tnum_characters,image_size*image_size])
-b=tf.Variable(tf.float32,shape=[num_characters])
+W=tf.Variable([[0]*(image_size*image_size) for i in range(num_characters)],dtype=tf.float32)
+b=tf.Variable([0]*num_characters,dtype=tf.float32)
 
 # placehoders
-images=tf.placeholder(tf.float32,shape=[None,image_size*image_size],name="image input")
-labels=tf.placeholder(tf.float32,shape=[None,num_characters])
+images=tf.placeholder(dtype=tf.float32,shape=[image_size*image_size,],name="image_input")
+labels=tf.placeholder(dtype=tf.float32,shape=[num_characters,])
 
 #input layer
 input_layer=images
 
 #a single output layer y=w*x+b
-output_layer=tf.add(tf.multiply(W,image),b)
+output_layer=tf.add(tf.multiply(W,input_layer),b)
 
 logits=tf.nn.softmax(output_layer)
 

@@ -47,8 +47,7 @@ for user in users_directory:
 		images.append(image)
 		labels.append(hotfixLabel(int(file[:3])))
 		total_captured+=1
-	
-	if(total_captured>5000):
+	if(total_captured>500):
 		break
 		
 images=np.array(images)
