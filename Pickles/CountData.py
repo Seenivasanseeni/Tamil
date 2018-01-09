@@ -2,7 +2,7 @@ import sys
 import os
 import pickle
 root_directory = sys.argv[1]
-print("Script Running fot:",root_directory)
+print("Script Running for:",root_directory)
 
 letter_count={}
 usr_count=0
@@ -12,10 +12,11 @@ for usr in os.listdir(root_directory):
 	usr_count+=1;
 	for img in os.listdir(root_directory+"/"+usr):
 		total+=1
-		if(not(len(img)==11)):
+		try:
+			label=int(img[:3])
+		except:
 			corrupt_count+=1
 			continue
-		label=int(img[:3])
 		try:
 			letter_count[label]+=1
 		except:
