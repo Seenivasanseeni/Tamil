@@ -49,6 +49,7 @@ for user in users_directory:
 		image=(plt.imread(file_path)-pixel_depth/2)/pixel_depth
 		image=image[:,:,:3] # remove alpha channel
 		image=rgb2gray(image) # remove rgb traces
+		#no need as normalixation depends on the whole dataset and it can be done in trainer side
 		image=(image-pixel_depth/2)/pixel_depth # do normalization
 		image=resize(image,(image_size,image_size)) #resize image to image_size,image_size
 		print(np.array(image).shape)
