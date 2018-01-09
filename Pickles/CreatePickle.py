@@ -26,6 +26,8 @@ def hotfixLabel(n):
 	label[n]=1
 	return label
 
+
+total_captured=0;
 for user in users_directory:
 	print("Processing Directory:"+str(user))
 	#extract label and image from the files in usrt_direcotory
@@ -44,7 +46,11 @@ for user in users_directory:
 		print(np.array(image).shape)
 		images.append(image)
 		labels.append(hotfixLabel(int(file[:3])))
-
+		total_captured+=1
+	
+	if(total_captured>5000):
+		break
+		
 images=np.array(images)
 labels=np.array(labels)
 print("Images shape ",images.shape)
