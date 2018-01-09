@@ -5,7 +5,12 @@ import pickle
 import scipy.misc
 from skimage.color import rgb2gray
 from skimage.transform import resize
-
+import sys
+#limit execution based on where you run
+#1 Creates the Dataset.pkl for all images else only 1000
+flag=True if (int(sys.argv[1])==1) else False
+print("Whether Data is for all:",flag)
+input()
 #root directory
 root_directory="tamil_dataset_offline"
 #get all the user_directory in the directory
@@ -34,7 +39,10 @@ for user in users_directory:
 	for file in os.listdir(root_directory+"/"+user+"/"):
 		#check for other types of files excluding .tiff images
 		print(file)
-		if(not (file[-5:]==".tiff")):
+		try:
+			#do a dummy operation that would exec error on notOkayfiles
+			label=int(file[:3])
+		except:
 			continue
 		file_path=root_directory+"/"+user+"/"+file
 		print("File Name:"+str(file_path))
@@ -45,9 +53,9 @@ for user in users_directory:
 		image=resize(image,(image_size,image_size)) #resize image to image_size,image_size
 		print(np.array(image).shape)
 		images.append(image)
-		labels.append(hotfixLabel(int(file[:3])))
+		labels.append(hotfixLabel(label))
 		total_captured+=1
-	if(total_captured>500):
+	if(not flag and total_captured>500):
 		break
 		
 images=np.array(images)
