@@ -55,7 +55,7 @@ with tf.Session() as sess:
 	sess.run(init)
 	iters=[]
 	loss_s=[]
-	num_iterations=50
+	num_iterations=10
 	for iter in range(num_iterations):
 		train_images,train_labels=load_next_batch()
 		for inner_iter in range(10):
@@ -66,5 +66,5 @@ with tf.Session() as sess:
 		print("===============================")
 		
 	plt.plot(iters,loss_s)
-	#plt.save("Train")
+	plt.savefig("Train")
 	plt.show()
