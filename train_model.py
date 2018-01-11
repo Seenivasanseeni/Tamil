@@ -3,7 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pickle
 
-
 #image parameters
 image_size=100
 num_characters=247
@@ -24,19 +23,20 @@ output_layer=tf.matmul(input_layer,W)+b
 
 logits=output_layer
 
+prediction=tf.nn.softmax(logits)
 loss=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=label,logits=logits))
 
 learning_rate=0.03
 
 optimizer=tf.train.AdamOptimizer(learning_rate).minimize(loss)
-
+accuracy=tf.reduce_sum(tf.cast(tf.argmax(label)==tf.argmax(prediction),tf.float32))*100
 init=tf.global_variables_initializer()
 
 # prepare code to fetch datasets
 pickle_file=open("Pickles/Dataset.pkl","rb")
 save=pickle.load(pickle_file)
 images=save["images"]
-images=(images-images.mean())/images.std()
+#images=(images-images.mean())/images.std()
 labels=save["labels"]
 size=50
 index=0
@@ -50,12 +50,21 @@ def load_next_batch():
 		index=0
 	return image_r,label_r
 
+
 with tf.Session() as sess:
 	sess.run(init)
-	num_iterations=100
+	iters=[]
+	loss_s=[]
+	num_iterations=50
 	for iter in range(num_iterations):
 		train_images,train_labels=load_next_batch()
-		_,loss_c=sess.run([optimizer,loss],feed_dict={image:train_images,label:train_labels})
-		print("Loss",loss_c)
-
-
+		for inner_iter in range(10):
+			_,loss_c=sess.run([optimizer,loss],feed_dict={image:train_images,label:train_labels})
+			print("loss:",loss_c)
+			iters.append(iter*inner_iter)
+			loss_s.append(loss_c)
+		print("===============================")
+		
+	plt.plot(iters,loss_s)
+	#plt.save("Train")
+	plt.show()

@@ -10,7 +10,7 @@ import sys
 #1 Creates the Dataset.pkl for all images else only 1000
 flag=True if (int(sys.argv[1])==1) else False
 print("Whether Data is for all:",flag)
-input()
+input("Press key to continue:")
 #root directory
 root_directory="tamil_dataset_offline"
 #get all the user_directory in the directory
@@ -47,7 +47,8 @@ for user in users_directory:
 		file_path=root_directory+"/"+user+"/"+file
 		print("File Name:"+str(file_path))
 		image=(plt.imread(file_path)-pixel_depth/2)/pixel_depth
-		image=image[:,:,:3] # remove alpha channel
+		if(not(file[-3:]=="png")):
+			image=image[:,:,:3] # remove alpha channel
 		image=rgb2gray(image) # remove rgb traces
 		#no need as normalixation depends on the whole dataset and it can be done in trainer side
 		image=(image-pixel_depth/2)/pixel_depth # do normalization
@@ -56,6 +57,7 @@ for user in users_directory:
 		images.append(image)
 		labels.append(hotfixLabel(label))
 		total_captured+=1
+		print("Count:",total_captured)
 	if(not flag and total_captured>500):
 		break
 		
