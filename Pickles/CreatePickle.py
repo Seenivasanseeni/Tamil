@@ -29,10 +29,13 @@ total_captured=0;
 flag=True
 for user in users_directory:
 	#check user specifed a  directory size
-	if(flag and user!=sys.argv[1]):
-		continue
-	if(user==sys.argv[1]):
-		flag=False
+	try:
+		if(flag and user!=sys.argv[1]):
+			continue
+		if(user==sys.argv[1]):
+			flag=False
+	except:
+		print("No User given Directories")
 
 	print("Processing Directory:"+str(user))
 	# define images and labels
@@ -62,6 +65,10 @@ for user in users_directory:
 		labels.append(hotfixLabel(label))
 		total_captured+=1
 		print("Count:",total_captured)
+		plt.imshow(image)
+		plt.show()
+	images=np.array(images)
+	labels=np.array(labels)
 	save={
 	"images":images,
 	"labels":labels

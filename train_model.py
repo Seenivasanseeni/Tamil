@@ -2,7 +2,8 @@ import tensorflow as tf
 import numpy as np 
 import matplotlib.pyplot as plt
 import pickle
-
+import os
+from collections import deque
 #image parameters
 image_size=100
 num_characters=247
@@ -33,21 +34,17 @@ accuracy=tf.reduce_sum(tf.cast(tf.argmax(label)==tf.argmax(prediction),tf.float3
 init=tf.global_variables_initializer()
 
 # prepare code to fetch datasets
-pickle_file=open("Pickles/Dataset.pkl","rb")
-save=pickle.load(pickle_file)
-images=save["images"]
-#images=(images-images.mean())/images.std()
-labels=save["labels"]
-size=50
-index=0
+users=deque(os.listdir("Pickles/Pkl"))
 def load_next_batch():
 	#return image
-	global index
-	image_r=images[index:index+size].reshape((-1,image_size*image_size))
-	label_r=labels[index:index+size]
-	index+=size
-	if(index>len(images)):
-		index=0
+	file_c=users.popleft()
+	print("Batch Name:",file_c)
+	users.append(file_c)
+	pickle_file="Pickles/Pkl/"+file_c
+	pickle_file=open(pickle_file,"rb")
+	save=pickle.load(pickle_file)
+	image_r=save["images"].reshape([-1,image_size*image_size])
+	label_r=save["labels"]
 	return image_r,label_r
 
 
