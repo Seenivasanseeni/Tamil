@@ -8,7 +8,7 @@ from skimage.transform import resize
 import sys
 
 #root directory
-root_directory="tamil_dataset_offline"
+root_directory="dataset_t"
 copy_root_directory="Pkl/"
 #get all the user_directory in the directory
 users_directory=os.listdir(root_directory)
@@ -19,7 +19,7 @@ pixel_depth=255.0
 num_characters=247
 
 def hotfixLabel(n):
-	print(n,num_characters)
+	#print(n,num_characters)
 	label=[0]*num_characters
 	label[n]=1
 	return label
@@ -65,8 +65,8 @@ for user in users_directory:
 		labels.append(hotfixLabel(label))
 		total_captured+=1
 		print("Count:",total_captured)
-		plt.imshow(image)
-		plt.show()
+		#plt.imshow(image)
+		#plt.show()
 	images=np.array(images)
 	labels=np.array(labels)
 	save={
