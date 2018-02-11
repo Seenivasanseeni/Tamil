@@ -32,7 +32,7 @@ loss=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=label,logits=
 accuracy=tf.reduce_mean(tf.cast(tf.equal(tf.argmax(label,1),tf.argmax(logits,1)),tf.float32))
 learning_rate=0.5
 
-optimizer=tf.train.GradientDescentOptimizer(learning_rate).minimize(loss)
+optimizer=tf.train.AdamOptimizer(learning_rate).minimize(loss)
 
 print("Shapes")
 print("weights",weights.get_shape())
@@ -74,15 +74,14 @@ sess.run(init_l)
 x=[]
 y=[]
 
-num_iterations=10
+num_iterations=100
 for iter in range(num_iterations):
 	train_images,train_labels=load_next_batch()
-	for inner_iter in range(10):
-		_,loss_c,acc,log=sess.run([optimizer,loss,accuracy,logits],feed_dict={image:train_images,label:train_labels})
-		print("loss:",loss_c)
-		print("accuracy:",acc)
-		x.append(iter*inner_iter)
-		y.append(loss_c)
+	_,loss_c,acc,log=sess.run([optimizer,loss,accuracy,logits],feed_dict={image:train_images,label:train_labels})
+	print("loss:",loss_c)
+	print("accuracy:",acc)
+	x.append(iter)
+	y.append(loss_c)
 	print("===============================")
 		
 plt.plot(x,y)
