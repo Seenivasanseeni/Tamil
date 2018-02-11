@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "CountData.py", line 36, in <module>
+    plt.scatter(letter_count.keys(),letter_count.values())
+  File "/glob/intel-python/python3/lib/python3.6/site-packages/matplotlib/pyplot.py", line 3434, in scatter
+    edgecolors=edgecolors, data=data, **kwargs)
+  File "/glob/intel-python/python3/lib/python3.6/site-packages/matplotlib/__init__.py", line 1898, in inner
+    return func(ax, *args, **kwargs)
+  File "/glob/intel-python/python3/lib/python3.6/site-packages/matplotlib/axes/_axes.py", line 4063, in scatter
+    self.add_collection(collection)
+  File "/glob/intel-python/python3/lib/python3.6/site-packages/matplotlib/axes/_base.py", line 1762, in add_collection
+    self.update_datalim(collection.get_datalim(self.transData))
+  File "/glob/intel-python/python3/lib/python3.6/site-packages/matplotlib/collections.py", line 220, in get_datalim
+    offsets = np.asanyarray(offsets, np.float_)
+  File "/glob/intel-python/python3/lib/python3.6/site-packages/numpy/core/numeric.py", line 583, in asanyarray
+    return array(a, dtype, copy=False, order=order, subok=True)
+TypeError: float() argument must be a string or a number, not 'dict_values'

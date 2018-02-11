@@ -1,0 +1,26 @@
+
+########################################################################
+# Colfax Cluster - https://colfaxresearch.com/
+#      Date:           Sat Feb 10 21:48:09 PST 2018
+#    Job ID:           42799.c009
+#      User:           u11460
+# Resources:           neednodes=1,nodes=1,walltime=06:00:00
+########################################################################
+
+/home/u11460/TamilCharacterRecognition/Pickles
+Script Running for: tamil_dataset_offline
+Total 82934
+No of users: 169
+Corrupt: 5
+Usable: 82929
+No of characters: 156
+Min Char: 0
+Max char: 155
+DOne
+
+########################################################################
+# Colfax Cluster
+# End of output for job 42799.c009
+# Date: Sat Feb 10 21:48:14 PST 2018
+########################################################################
+
