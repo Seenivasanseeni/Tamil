@@ -1,7 +1,7 @@
 import sys
 import os
 from shutil import copyfile
-char=sys.argv[1]
+char=int(sys.argv[1])
 root_s="tamil_dataset_offline"
 root_d="dataset_t"
 try:
@@ -20,7 +20,7 @@ for user in os.listdir(root_s):
 		filepath_s=folder_s+"/"+file
 		filepath_d=folder_d+"/"+file
 		try:
-			if(char==file[:3]):
+			if(char==int(file[:3])):
 				copyfile(filepath_s,filepath_d)
 		except:
 			pass
