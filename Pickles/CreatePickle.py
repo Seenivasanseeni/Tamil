@@ -10,6 +10,8 @@ import sys
 #root directory
 root_directory="dataset_t"
 copy_root_directory="Pkl/"
+#make Pkl direcory
+os.makedirs(copy_root_directory,exist_ok=True)
 #get all the user_directory in the directory
 users_directory=os.listdir(root_directory)
 
