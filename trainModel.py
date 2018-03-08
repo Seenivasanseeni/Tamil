@@ -14,16 +14,19 @@ num_characters=247
 # prepare code to fetch datasets
 users=deque(os.listdir("Pickles/Pkl"))
 def load_next_batch():
-	#return image
-	file_c=users.popleft()
-	print("Batch Name:",file_c)
-	users.append(file_c)
-	pickle_file="Pickles/Pkl/"+file_c
-	pickle_file=open(pickle_file,"rb")
-	save=pickle.load(pickle_file)
-	image_r=save["images"].reshape([-1,image_size*image_size])
-	label_r=save["labels"]
-	return image_r,label_r
+    #return image
+    file_c=users.popleft()
+    print("Batch Name:",file_c)
+    users.append(file_c)
+    pickle_file="Pickles/Pkl/"+file_c
+    pickle_file=open(pickle_file,"rb")
+    save=pickle.load(pickle_file)
+    image_r=save["images"].reshape([-1,image_size*image_size])
+    label_r=save["labels"]
+    if(len(label_r)==0):
+        print("Error in loading .. Continuing for the nest iteration")
+        return load_next_batch()
+    return image_r,label_r
 
 def make_test_data():
 	test_pickle_file="Pickles/Pkl/usr_"+user+".pkl"
