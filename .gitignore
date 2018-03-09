@@ -3,3 +3,4 @@ Pickles/Dataset.pkl
 Word-Datasets-sample/*/*
 Pickles/Pkl/*
 Pickles/dataset_t/*
+Jobs/*.sh.[oe][1-9]*
