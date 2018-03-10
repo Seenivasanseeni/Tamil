@@ -8,12 +8,15 @@ from skimage.transform import resize
 import sys
 
 #root directory
-root_directory="dataset_t"
+root_directory=sys.argv[1]
 copy_root_directory="Pkl/"
 #make Pkl direcory
 os.makedirs(copy_root_directory,exist_ok=True)
 #get all the user_directory in the directory
 users_directory=os.listdir(root_directory)
+
+#userd directory
+print(users_directory)
 
 #image characterist
 image_size=100
@@ -30,15 +33,6 @@ def hotfixLabel(n):
 total_captured=0;
 flag=True
 for user in users_directory:
-	#check user specifed a  directory size
-	try:
-		if(flag and user!=sys.argv[1]):
-			continue
-		if(user==sys.argv[1]):
-			flag=False
-	except:
-		print("No User given Directories")
-
 	print("Processing Directory:"+str(user))
 	# define images and labels
 	images=[]
