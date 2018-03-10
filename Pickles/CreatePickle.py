@@ -49,7 +49,11 @@ for user in users_directory:
 			continue
 		file_path=root_directory+"/"+user+"/"+file
 		print("File Name:"+str(file_path))
-		image=(plt.imread(file_path)-pixel_depth/2)/pixel_depth
+		try:
+			image=(plt.imread(file_path)-pixel_depth/2)/pixel_depth
+		except:
+			print("Invalid Image")
+			continue
 		if(not(file[-3:]=="png")):
 			image=image[:,:,:3] # remove alpha channel
 		image=rgb2gray(image) # remove rgb traces
