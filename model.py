@@ -10,27 +10,24 @@ class Model(object):
         self.image_size=image_size
         self.num_characters=num_characters
 
-        #variables
-        self.weights=tf.Variable(np.zeros(shape=(self.image_size*self.image_size,num_characters)),dtype=tf.float32)
-        self.biases=tf.Variable(np.zeros(shape=[num_characters]),dtype=tf.float32)
-
+        
         # placehoders
         self.image=tf.placeholder(dtype=tf.float32,shape=[None,self.image_size*self.image_size],name="self.image_input")
         self.label=tf.placeholder(dtype=tf.float32,shape=[None,num_characters])
-
-        #input layer
-        input_layer=self.image
-
-        #a single output layer y=w*x+b
-        logits=tf.nn.softmax(tf.matmul(input_layer,self.weights)+self.biases)
-
+        
+        #layer1
+        layer1=tf.layers.dense(self.image,units=1024,activation=tf.nn.relu)
+        
+        layer2=tf.layers.dense(layer1,units=num_characters,activation=tf.nn.relu)
+        
+        logits=tf.nn.softmax(layer2)
 
         self.loss=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=self.label,logits=logits))
 
         self.accuracy=tf.reduce_mean(tf.cast(tf.equal(tf.argmax(self.label,1),tf.argmax(logits,1)),tf.float32))
         self.learning_rate=0.5
 
-        self.optimizer=tf.train.AdamOptimizer(self.learning_rate).minimize(self.loss)
+        self.optimizer=tf.train.GradientDescentOptimizer(self.learning_rate).minimize(self.loss)
         self.sess=tf.InteractiveSession()
         tf.global_variables_initializer().run()
         tf.local_variables_initializer().run()
