@@ -46,8 +46,8 @@ y=[]
 num_iterations=100
 for iter in range(num_iterations):
     train_images,train_labels=load_next_batch()
-    train_images=train_images[:10]
-    train_labels=train_labels[:10]
+    train_images=train_images
+    train_labels=train_labels
     l,acc=Mod.train(train_images,train_labels)
     x.append(iter)
     y.append(l)
