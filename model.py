@@ -24,8 +24,8 @@ class Model(object):
         pool2=tf.layers.max_pooling2d(conv2,pool_size=[2,2],strides=2)
 
         pool2_flat=tf.reshape(pool2,[-1,25*25*64])
-
-        dense=tf.layers.dense(pool2_flat,units=num_characters,activation=tf.nn.relu)
+        dropout=tf.nn.dropout(pool2_flat,rate=0.5)
+        dense=tf.layers.dense(dropout,units=num_characters,activation=tf.nn.relu)
 
 
         print(conv1)
