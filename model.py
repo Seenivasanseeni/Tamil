@@ -20,19 +20,18 @@ class Model(object):
         conv1=tf.layers.conv2d(input_layer,filters=32,kernel_size=[50,50],padding='same')
         pool1=tf.layers.max_pooling2d(conv1,pool_size=[20,20],strides=5)
 
-        conv2=tf.layers.conv2d(pool1,filters=64,kernel_size=[20,20],padding='same')
-        pool2=tf.layers.max_pooling2d(conv2,pool_size=[5,5],strides=2)
+        #conv2=tf.layers.conv2d(pool1,filters=64,kernel_size=[20,20],padding='same')
+        #pool2=tf.layers.max_pooling2d(conv2,pool_size=[5,5],strides=2)
 
-        pool2_flat=tf.reshape(pool2,[-1,7*7*64])
-        dropout=tf.nn.dropout(pool2_flat,0.3)
-        dense=tf.layers.dense(dropout,units=num_characters,activation=tf.nn.relu)
+        #pool2_flat=tf.reshape(pool2,[-1,7*7*64])
+        #dropout=tf.nn.dropout(pool2_flat,0.2)
+        #dense=tf.layers.dense(dropout,units=num_characters,activation=tf.nn.relu)
 
-
+        pool1_flat=tf.reshape(pool1,[-1,17*17*32])
+        dense=tf.layers.dense(pool1_flat,units=num_characters)
         print(conv1)
         print(pool1)
-        print(conv2)
-        print(pool2)
-        print(pool2_flat)
+        print(pool1_flat)
         print(dense)
 
 
