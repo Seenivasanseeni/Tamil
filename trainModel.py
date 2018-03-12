@@ -5,6 +5,8 @@ import os
 import sys
 from collections import deque
 import model
+
+#Specify which user is writing
 user=sys.argv[1]
 
 #image parameters
@@ -36,6 +38,15 @@ def make_test_data():
 	labels=save["labels"]
 	return images,labels
 
+def load_user_batch(user):
+    user_pickle_file="Pickles/Pkl/usr_"+user+".pkl"
+    user_pickle_file=open(user_pickle_file,"rb")
+    save=pickle.load(user_pickle_file)
+    images=save["images"].reshape([-1,image_size*image_size])
+    labels=save["labels"]
+    if(len(images)==0):
+        raise Exception("User "+user+" is empty. Please Specify another user")
+    return images,labels
 
 Mod=model.Model()
 Mod.construct(image_size,num_characters)
@@ -45,9 +56,9 @@ y=[]
 
 num_iterations=100
 for iter in range(num_iterations):
-    train_images,train_labels=load_next_batch()
-    train_images=train_images
-    train_labels=train_labels
+    train_images,train_labels=load_user_batch(user)
+    train_images=train_images[:10]
+    train_labels=train_labels[:10]
     l,acc=Mod.train(train_images,train_labels)
     x.append(iter)
     y.append(l)

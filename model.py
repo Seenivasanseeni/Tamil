@@ -17,14 +17,14 @@ class Model(object):
 
         input_layer=tf.reshape(self.image,[-1,100,100,1])
 
-        conv1=tf.layers.conv2d(input_layer,filters=32,kernel_size=[5,5],padding='same')
-        pool1=tf.layers.max_pooling2d(conv1,pool_size=[2,2],strides=[2,2])
+        conv1=tf.layers.conv2d(input_layer,filters=32,kernel_size=[50,50],padding='same')
+        pool1=tf.layers.max_pooling2d(conv1,pool_size=[20,20],strides=5)
 
-        conv2=tf.layers.conv2d(pool1,filters=64,kernel_size=[5,5],padding='same')
-        pool2=tf.layers.max_pooling2d(conv2,pool_size=[2,2],strides=2)
+        conv2=tf.layers.conv2d(pool1,filters=64,kernel_size=[20,20],padding='same')
+        pool2=tf.layers.max_pooling2d(conv2,pool_size=[5,5],strides=2)
 
-        pool2_flat=tf.reshape(pool2,[-1,25*25*64])
-        dropout=tf.nn.dropout(pool2_flat,0.5)
+        pool2_flat=tf.reshape(pool2,[-1,7*7*64])
+        dropout=tf.nn.dropout(pool2_flat,0.3)
         dense=tf.layers.dense(dropout,units=num_characters,activation=tf.nn.relu)
 
 
