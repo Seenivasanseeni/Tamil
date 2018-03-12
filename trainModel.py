@@ -5,13 +5,13 @@ import os
 import sys
 from collections import deque
 import model
-
+from tools import get
 #Specify which user is writing
 user=sys.argv[1]
 
 #image parameters
-image_size=100
-num_characters=247
+image_size=int(get("image_size"))
+num_characters=int(get("num_characters"))
 
 # prepare code to fetch datasets
 users=deque(os.listdir("Pickles/Pkl"))
@@ -44,6 +44,7 @@ def load_user_batch(user):
     save=pickle.load(user_pickle_file)
     images=save["images"].reshape([-1,image_size*image_size])
     labels=save["labels"]
+
     if(len(images)==0):
         raise Exception("User "+user+" is empty. Please Specify another user")
     return images,labels
@@ -54,11 +55,12 @@ Mod.construct(image_size,num_characters)
 x=[]
 y=[]
 
-num_iterations=100
+num_iterations=int(get("num_iterations"))
+
 for iter in range(num_iterations):
     train_images,train_labels=load_user_batch(user)
-    train_images=train_images[:10]
-    train_labels=train_labels[:10]
+    train_images=train_images
+    train_labels=train_labels
     l,acc=Mod.train(train_images,train_labels)
     x.append(iter)
     y.append(l)

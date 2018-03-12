@@ -6,6 +6,7 @@ import scipy.misc
 from skimage.color import rgb2gray
 from skimage.transform import resize
 import sys
+from tools import get
 
 #root directory
 root_directory=sys.argv[1]
@@ -19,9 +20,8 @@ users_directory=os.listdir(root_directory)
 print(users_directory)
 
 #image characterist
-image_size=100
-pixel_depth=255.0
-num_characters=247
+image_size=int(get("image_size"))
+num_characters=int(get("num_characters"))
 
 def hotfixLabel(n):
 	#print(n,num_characters)
@@ -50,17 +50,17 @@ for user in users_directory:
 		file_path=root_directory+"/"+user+"/"+file
 		print("File Name:"+str(file_path))
 		try:
-			image=(plt.imread(file_path)-pixel_depth/2)/pixel_depth
+			image=plt.imread(file_path)
 		except:
 			print("Invalid Image")
 			continue
+
 		if(not(file[-3:]=="png")):
 			image=image[:,:,:3] # remove alpha channel
 		image=rgb2gray(image) # remove rgb traces
-		#no need as normalixation depends on the whole dataset and it can be done in trainer side
-		#image=(image-pixel_depth/2)/pixel_depth # do normalization
+
 		image=resize(image,(image_size,image_size)) #resize image to image_size,image_size
-		#print(np.array(image).shape)
+
 		images.append(image)
 		labels.append(hotfixLabel(label))
 		total_captured+=1
@@ -78,5 +78,5 @@ for user in users_directory:
 	pickle.dump(save,file_p)
 	file_p.close()
 	print("Saved in ",pickel_file)
-		
+
 print("Whole User Dataset Dumped Suceesfully")

@@ -29,6 +29,8 @@ class Model(object):
 
         pool1_flat=tf.reshape(pool1,[-1,17*17*32])
         dense=tf.layers.dense(pool1_flat,units=num_characters)
+        print(self.image)
+        print(self.label)
         print(conv1)
         print(pool1)
         print(pool1_flat)
