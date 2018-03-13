@@ -6,6 +6,8 @@ import sys
 from collections import deque
 import model
 from tools import get
+import Loader
+
 #Specify which user is writing
 user=int(sys.argv[1])
 
@@ -65,7 +67,7 @@ for iter in range(num_iterations):
     print("Training with ",len(train_labels))
     l,acc=Mod.train(train_images,train_labels)
     print("Testing it")
-    train_images,train_labels=load_user_batch(user)
+    train_images,train_labels=Loader.load_test_data()
     train_images=train_images
     train_labels=train_labels
     print("Testing with ",len(train_labels))
