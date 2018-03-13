@@ -55,8 +55,10 @@ Mod=model.Model()
 Mod.construct(image_size,num_characters)
 
 step=[]
-loss=[]
-accuracy=[]
+train_loss=[]
+train_accuracy=[]
+test_loss=[]
+test_accurracy=[]
 
 test_images,test_labels=Loader.load_test_data()
 
@@ -66,15 +68,21 @@ for iter in range(num_iterations):
     train_images,train_labels=load_user_batch(user)
 
     print("Training with ",len(train_labels))
-    l,acc=Mod.train(train_images,train_labels)
+    train_l,train_acc=Mod.train(train_images,train_labels)
     print("Testing it")
     print("Testing with ",len(test_labels))
-    l,acc=Mod.test(test_images,test_labels)
+    test_l,test_acc=Mod.test(test_images,test_labels)
     step.append(iter)
-    loss.append(l)
-    accuracy.append(acc)
+    train_loss.append(train_l)
+    test_loss.append(test_l)
+    train_accuracy.append(train_acc)
+    test_accurracy.append(test_acc)
     print("===============================")
 
-plt.plot(step,loss,color="red")
-plt.plot(step,accuracy,color="blue")
-plt.savefig("Train")
+plt.plot(step,train_loss,color="red")
+plt.plot(step,train_accuracy,color="black")
+plt.savefig("Train.png")
+
+plt.plot(step,test_loss,color="red")
+plt.plot(step,test_accurracy,color="black")
+plt.savefig("Test.png")

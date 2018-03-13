@@ -58,6 +58,7 @@ class Model(object):
 
         _,l,acc=self.sess.run([self.optimizer,self.loss,self.accuracy],feed_dict={self.image:images,self.label:labels})
         acc*=100
+        l*=100
         print("Loss {} Accuaracy {}".format(l,acc))
         return l,acc
 
@@ -65,5 +66,6 @@ class Model(object):
         ''' This method test the trained model using passed data'''
         l,acc=self.sess.run([self.loss,self.accuracy],feed_dict={self.image:images,self.label:labels})
         acc*=100
+        l*=100
         print(" Accuaracy {}".format(acc))
         return l,acc
