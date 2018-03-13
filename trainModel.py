@@ -7,7 +7,7 @@ from collections import deque
 import model
 from tools import get
 #Specify which user is writing
-user=sys.argv[1]
+user=int(sys.argv[1])
 
 #image parameters
 image_size=int(get("image_size"))
@@ -31,7 +31,7 @@ def load_next_batch():
     return image_r,label_r
 
 def make_test_data():
-	test_pickle_file="Pickles/Pkl/usr_"+user+".pkl"
+	test_pickle_file="Pickles/Pkl/usr_"+str(user)+".pkl"
 	test_pickle_file=open(test_pickle_file,"rb")
 	save=pickle.load(test_pickle_file)
 	images=save["images"].reshape([-1,image_size*image_size])
@@ -39,7 +39,7 @@ def make_test_data():
 	return images,labels
 
 def load_user_batch(user):
-    user_pickle_file="Pickles/Pkl/usr_"+user+".pkl"
+    user_pickle_file="Pickles/Pkl/usr_"+str(user)+".pkl"
     user_pickle_file=open(user_pickle_file,"rb")
     save=pickle.load(user_pickle_file)
     images=save["images"].reshape([-1,image_size*image_size])
@@ -52,8 +52,9 @@ def load_user_batch(user):
 Mod=model.Model()
 Mod.construct(image_size,num_characters)
 
-x=[]
-y=[]
+step=[]
+loss=[]
+accuracy=[]
 
 num_iterations=int(get("num_iterations"))
 
@@ -61,16 +62,20 @@ for iter in range(num_iterations):
     train_images,train_labels=load_user_batch(user)
     train_images=train_images
     train_labels=train_labels
+    print("Training with ",len(train_labels))
     l,acc=Mod.train(train_images,train_labels)
     print("Testing it")
     train_images,train_labels=load_user_batch(user)
     train_images=train_images
     train_labels=train_labels
+    print("Testing with ",len(train_labels))
     l,acc=Mod.train(train_images,train_labels)
 
-    x.append(iter)
-    y.append(l)
+    step.append(iter)
+    loss.append(l)
+    accuracy.append(acc)
     print("===============================")
 
-plt.plot(x,y)
+plt.plot(step,loss,color="red")
+plt.plot(step,accuracy,color="blue")
 plt.savefig("Train")
