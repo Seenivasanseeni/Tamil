@@ -6,7 +6,7 @@ import scipy.misc
 from skimage.color import rgb2gray
 from skimage.transform import resize
 import sys
-from tools import get
+from tools import get,isimageneeded
 
 #root directory
 root_directory=sys.argv[1]
@@ -24,11 +24,10 @@ image_size=int(get("image_size"))
 num_characters=int(get("num_characters"))
 
 def hotfixLabel(n):
-#print(n,num_characters)
-    label=[0]*num_characters
-    label[n]=1
-return label
-
+	#print(n,num_characters)
+	label=[0]*num_characters
+	label[n]=1
+	return label
 
 total_captured=0;
 flag=True
@@ -43,9 +42,8 @@ for user in users_directory:
 		#check for other types of files excluding .tiff images
 		#print(file)
 		try:
-			label=int(file[:3]);
-            if(not isimageneeded(label)):
-                continue #change
+			#do a dummy operation that would exec error on notOkayfiles
+			label=int(file[:3])
 		except:
 			continue
 		file_path=root_directory+"/"+user+"/"+file

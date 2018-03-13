@@ -8,3 +8,8 @@ def get(param):
 		return config["dataset"][param]
 	except :
 		print("Section/key not found check param.ini file for errors")
+
+def isimageneeded(label):
+	if(label<=num_characters):
+		return True
+	return False
