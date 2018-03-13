@@ -20,20 +20,23 @@ class Model(object):
         conv1=tf.layers.conv2d(input_layer,filters=32,kernel_size=[50,50],padding='same')
         pool1=tf.layers.max_pooling2d(conv1,pool_size=[20,20],strides=5)
 
-        #conv2=tf.layers.conv2d(pool1,filters=64,kernel_size=[20,20],padding='same')
-        #pool2=tf.layers.max_pooling2d(conv2,pool_size=[5,5],strides=2)
+        conv2=tf.layers.conv2d(pool1,filters=64,kernel_size=[20,20],padding='same')
+        pool2=tf.layers.max_pooling2d(conv2,pool_size=[5,5],strides=2)
 
-        #pool2_flat=tf.reshape(pool2,[-1,7*7*64])
-        #dropout=tf.nn.dropout(pool2_flat,0.2)
-        #dense=tf.layers.dense(dropout,units=num_characters,activation=tf.nn.relu)
+        pool2_flat=tf.reshape(pool2,[-1,7*7*64])
+        dropout=tf.nn.dropout(pool2_flat,0.2)
+        dense=tf.layers.dense(dropout,units=num_characters,activation=tf.nn.relu)
 
-        pool1_flat=tf.reshape(pool1,[-1,17*17*32])
-        dense=tf.layers.dense(pool1_flat,units=num_characters)
+        #pool1_flat=tf.reshape(pool1,[-1,17*17*32])
+        #dense=tf.layers.dense(pool1_flat,units=num_characters)
         print(self.image)
         print(self.label)
         print(conv1)
         print(pool1)
-        print(pool1_flat)
+        print(conv2)
+        print(pool2)
+        print(pool2_flat)
+        print(dropout)
         print(dense)
 
 
@@ -46,7 +49,7 @@ class Model(object):
         self.accuracy=tf.reduce_mean(tf.cast(tf.equal(tf.argmax(self.label,1),tf.argmax(logits,1)),tf.float32))
         self.learning_rate=0.5
 
-        self.optimizer=tf.train.AdamOptimizer(self.learning_rate).minimize(self.loss)
+        self.optimizer=tf.train.GradientDescentOptimizer(self.learning_rate).minimize(self.loss)
         self.sess=tf.InteractiveSession()
         tf.global_variables_initializer().run()
         tf.local_variables_initializer().run()
