@@ -82,6 +82,7 @@ for iter in range(num_iterations):
 plt.plot(step,train_loss,color="red")
 plt.plot(step,train_accuracy,color="black")
 plt.savefig("Train.png")
+plt.show()
 
 plt.plot(step,test_loss,color="red")
 plt.plot(step,test_accurracy,color="black")
