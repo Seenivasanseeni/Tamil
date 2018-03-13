@@ -29,6 +29,10 @@ def hotfixLabel(n):
 	label[n]=1
 	return label
 
+def isimageneeded(label):
+    if(label<=num_characters):
+        return True
+    return False
 
 total_captured=0;
 flag=True
