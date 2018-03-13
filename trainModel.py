@@ -58,21 +58,18 @@ step=[]
 loss=[]
 accuracy=[]
 
+test_images,test_labels=Loader.load_test_data()
+
 num_iterations=int(get("num_iterations"))
 
 for iter in range(num_iterations):
     train_images,train_labels=load_user_batch(user)
-    train_images=train_images
-    train_labels=train_labels
+
     print("Training with ",len(train_labels))
     l,acc=Mod.train(train_images,train_labels)
     print("Testing it")
-    train_images,train_labels=Loader.load_test_data()
-    train_images=train_images
-    train_labels=train_labels
-    print("Testing with ",len(train_labels))
-    l,acc=Mod.train(train_images,train_labels)
-
+    print("Testing with ",len(test_labels))
+    l,acc=Mod.test(test_images,test_labels)
     step.append(iter)
     loss.append(l)
     accuracy.append(acc)

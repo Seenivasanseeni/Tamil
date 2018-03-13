@@ -57,10 +57,13 @@ class Model(object):
         ''' This method trains the model that is constructed using the cosntruct method'''
 
         _,l,acc=self.sess.run([self.optimizer,self.loss,self.accuracy],feed_dict={self.image:images,self.label:labels})
+        acc*=100
         print("Loss {} Accuaracy {}".format(l,acc))
         return l,acc
+
     def test(self,images,labels):
         ''' This method test the trained model using passed data'''
-        acc=self.sess.run([self.accuracy],feed_dict={self.image:images,self.label:labels})
+        l,acc=self.sess.run([self.loss,self.accuracy],feed_dict={self.image:images,self.label:labels})
+        acc*=100
         print(" Accuaracy {}".format(acc))
-        return acc
+        return l,acc
