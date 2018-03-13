@@ -44,7 +44,7 @@ class Model(object):
 
         logits=tf.nn.softmax(dense)
 
-        self.loss=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=self.label,logits=logits))
+        self.loss=tf.nn.softmax_cross_entropy_with_logits(labels=self.label,logits=logits)
 
         self.accuracy=tf.reduce_mean(tf.cast(tf.equal(tf.argmax(self.label,1),tf.argmax(logits,1)),tf.float32))
         self.learning_rate=0.5
