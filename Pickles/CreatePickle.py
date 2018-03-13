@@ -49,7 +49,7 @@ for user in users_directory:
 		try:
 			label=int(file[:3]);
             if(not isimageneeded(label)):
-                continue
+                continue #change
 		except:
 			continue
 		file_path=root_directory+"/"+user+"/"+file
