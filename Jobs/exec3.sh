@@ -3,6 +3,6 @@ cd $PBS_O_WORKDIR
 
 cd ../
 echo " Training Model"
-python trainModel.py 33
+python trainModel.py 28
 echo "Model Trained"
 
