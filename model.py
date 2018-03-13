@@ -17,18 +17,17 @@ class Model(object):
 
         input_layer=tf.reshape(self.image,[-1,100,100,1])
 
-        conv1=tf.layers.conv2d(input_layer,filters=32,kernel_size=[50,50],padding='same')
-        pool1=tf.layers.max_pooling2d(conv1,pool_size=[20,20],strides=5)
+        conv1=tf.layers.conv2d(input_layer,filters=4,kernel_size=[5,5],padding='same')
+        pool1=tf.layers.max_pooling2d(conv1,pool_size=[2,2],strides=5)
 
-        conv2=tf.layers.conv2d(pool1,filters=64,kernel_size=[20,20],padding='same')
-        pool2=tf.layers.max_pooling2d(conv2,pool_size=[5,5],strides=2)
+        conv2=tf.layers.conv2d(pool1,filters=8,kernel_size=[5,5],padding='same')
+        pool2=tf.layers.max_pooling2d(conv2,pool_size=[2,2],strides=2)
 
-        pool2_flat=tf.reshape(pool2,[-1,7*7*64])
+        pool2_flat=tf.reshape(pool2,[-1,10*10*8])
         dropout=tf.nn.dropout(pool2_flat,0.2)
+
         dense=tf.layers.dense(dropout,units=num_characters,activation=tf.nn.relu)
 
-        #pool1_flat=tf.reshape(pool1,[-1,17*17*32])
-        #dense=tf.layers.dense(pool1_flat,units=num_characters)
         print(self.image)
         print(self.label)
         print(conv1)
@@ -44,7 +43,7 @@ class Model(object):
 
         logits=tf.nn.softmax(dense)
 
-        self.loss=tf.nn.softmax_cross_entropy_with_logits(labels=self.label,logits=logits)
+        self.loss=tf.reduce_sum(tf.losses.log_loss(labels=self.label,predictions=logits))
 
         self.accuracy=tf.reduce_mean(tf.cast(tf.equal(tf.argmax(self.label,1),tf.argmax(logits,1)),tf.float32))
         self.learning_rate=0.5
