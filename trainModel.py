@@ -58,10 +58,16 @@ y=[]
 num_iterations=int(get("num_iterations"))
 
 for iter in range(num_iterations):
+    train_images,train_labels=load_next_batch()
+    train_images=train_images
+    train_labels=train_labels
+    l,acc=Mod.train(train_images,train_labels)
+    print("Testing it")
     train_images,train_labels=load_user_batch(user)
     train_images=train_images
     train_labels=train_labels
     l,acc=Mod.train(train_images,train_labels)
+
     x.append(iter)
     y.append(l)
     print("===============================")
