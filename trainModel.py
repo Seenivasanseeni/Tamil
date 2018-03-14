@@ -87,3 +87,12 @@ plt.show()
 plt.plot(step,test_loss,color="red")
 plt.plot(step,test_accurracy,color="black")
 plt.savefig("Test.png")
+plt.show()
+
+def predict():
+    print("Now its prediction time")
+    image=Loader.predict_data()
+    prediction=Mod.predict(image)
+    print("Prediction",prediction[0])
+import pdb
+pdb.set_trace()

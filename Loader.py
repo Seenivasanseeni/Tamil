@@ -59,3 +59,25 @@ def load_test_data():
     labels=np.array(labels)
     images=images.reshape([-1,image_size*image_size])
     return images,labels
+
+def process_image(file_path):
+	print("File Name:"+str(file_path))
+	try:
+		image=plt.imread(file_path)
+	except:
+		raise Exception("Invalid Image")
+
+	if(not(file_path[-3:]=="png")):
+		image=image[:,:,:3] # remove alpha channel
+		image=rgb2gray(image) # remove rgb traces
+
+	image=resize(image,(image_size,image_size)) #resize image to image_size,image_size
+
+	return image
+
+def predict_data():
+	input_file_path=input("\nEnter absolute  File Path:")
+	image=[process_image(input_file_path)]
+	image=np.array(image)
+	image=image.reshape([-1,image_size*image_size])
+	return image

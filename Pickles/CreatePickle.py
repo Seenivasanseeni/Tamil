@@ -16,17 +16,13 @@ os.makedirs(copy_root_directory,exist_ok=True)
 #get all the user_directory in the directory
 users_directory=os.listdir(root_directory)
 
-#userd directory
-print(users_directory)
 
 #image characterist
 image_size=int(get("image_size"))
 num_characters=int(get("num_characters"))
 
-print("image_size,num_characters",image_size,num_characters)
 
 def hotfixLabel(n):
-	print(n,num_characters)
 	label=[0]*num_characters
 	label[n]=1
 	return label
@@ -34,7 +30,7 @@ def hotfixLabel(n):
 total_captured=0;
 flag=True
 for user in users_directory:
-	print("Processing Directory:"+str(user))
+	#print("Processing Directory:"+str(user))
 	# define images and labels
 	images=[]
 	labels=[]
@@ -43,22 +39,21 @@ for user in users_directory:
 	for file in os.listdir(root_directory+"/"+user+"/"):
 		#check for other types of files excluding .tiff images
 		file_path=root_directory+"/"+user+"/"+file
-		print("File Name:"+str(file_path))
+		#print("File Name:"+str(file_path))
 		try:
 			#do a dummy operation that would exec error on notOkayfiles
 			label=int(file[:3])
 			if(label>=num_characters):
-				print("Ignoring File")
+				#print("Ignoring File")
 				continue
-			print("File can be used")
+			#print("File can be used")
 		except:
 			continue
 		try:
 			image=plt.imread(file_path)
 		except:
-			print("Invalid Image")
+			#print("Invalid Image")
 			continue
-
 		if(not(file[-3:]=="png")):
 			image=image[:,:,:3] # remove alpha channel
 		image=rgb2gray(image) # remove rgb traces
@@ -68,9 +63,11 @@ for user in users_directory:
 		images.append(image)
 		labels.append(hotfixLabel(label))
 		total_captured+=1
-		print("Count:",total_captured)
-		#plt.imshow(image)
-		#plt.show()
+
+	#print("Count:",total_captured)
+	#plt.imshow(image)
+	#plt.show()
+
 	images=np.array(images)
 	labels=np.array(labels)
 	save={
@@ -81,6 +78,6 @@ for user in users_directory:
 	file_p=open(pickel_file,'wb')
 	pickle.dump(save,file_p)
 	file_p.close()
-	print("Saved in ",pickel_file)
+	#print("Saved in ",pickel_file)
 
 print("Whole User Dataset Dumped Suceesfully")

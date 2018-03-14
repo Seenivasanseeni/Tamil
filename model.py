@@ -41,11 +41,11 @@ class Model(object):
 
 
 
-        logits=tf.nn.softmax(dense)
+        self.logits=tf.nn.softmax(dense)
+        self.predictions=tf.arg_max(self.logits,1)
+        self.loss=tf.reduce_sum(tf.losses.log_loss(labels=self.label,predictions=self.logits))
 
-        self.loss=tf.reduce_sum(tf.losses.log_loss(labels=self.label,predictions=logits))
-
-        self.accuracy=tf.reduce_mean(tf.cast(tf.equal(tf.argmax(self.label,1),tf.argmax(logits,1)),tf.float32))
+        self.accuracy=tf.reduce_mean(tf.cast(tf.equal(tf.argmax(self.label,1),tf.argmax(self.logits,1)),tf.float32))
         self.learning_rate=0.5
 
         self.optimizer=tf.train.GradientDescentOptimizer(self.learning_rate).minimize(self.loss)
@@ -69,3 +69,8 @@ class Model(object):
         l*=100
         print(" Accuaracy {}".format(acc))
         return l,acc
+
+    def predict(self,images):
+        '''prediction method'''
+        p=self.sess.run([self.predictions],feed_dict={self.image:images})
+        return p
