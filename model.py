@@ -74,3 +74,15 @@ class Model(object):
         '''prediction method'''
         p=self.sess.run([self.predictions],feed_dict={self.image:images})
         return p
+
+    def save(self):
+        saver=tf.train.Saver()
+        saver.save(sess,"Model_Dump.ckpt")
+        print("Model Stored in Disk")
+        return
+
+    def restore(self):
+        saver=tf.train.Saver()
+        saver.restore(sess,"Model_Dump.ckpt")
+        print("Model Restored")
+        return
